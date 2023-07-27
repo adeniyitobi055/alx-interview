@@ -1,39 +1,36 @@
 #!/usr/bin/python3
-"""
-0-validate_utf8 module
+"""UTF-8 Validation Module
 """
 
 
 def validUTF8(data):
-    """
-    Determines if a given data set represents a valid UTF-8 encoding
-    """
-    def is_valid_following_byte(byte):
-        """
-        Checks if a byte starts with `10`
-        """
-        return byte & 0b11000000 == 0b10000000
+    """Determines if a given data set represents a valid UTF-8 encoding.
 
-    # Variable to keep track of remaining bytes in the current character
-    remaining_bytes = 0
+    Args:
+        data (list): list of integers
+
+    Returns:
+        bool: True if data is a valid UTF-8 encoding, else return False
+    """
+    n_bytes = 0
 
     for num in data:
-        if remaining_bytes == 0:
-            if num & 0b10000000 == 0:  # Single-byte character
+        byte = num & 0xff
+        if n_bytes == 0:
+            mask1 = 1 << 7
+            mask2 = 1 << 6
+            while mask1 & byte:
+                n_bytes += 1
+                mask1 = mask1 >> 1
+                mask2 = mask2 >> 1
+            if n_bytes == 0:
                 continue
-            elif num & 0b11100000 == 0b11000000:  # Two-byte character
-                remaining_bytes = 1
-            elif num & 0b11110000 == 0b11100000:  # Three-byte character
-                remaining_bytes = 2
-            elif num & 0b11111000 == 0b11110000:  # Four-byte character
-                remaining_bytes = 3
-            else:
+            if n_bytes == 1 or n_bytes > 4:
                 return False
         else:
-            if not is_valid_following_byte(num):
+            mask1 = 1 << 7
+            mask2 = 1 << 6
+            if not (byte & mask1 and not (byte & mask2)):
                 return False
-
-        remaining_bytes -= 1
-
-    # If all bytes have been used, it's a valid UTF-8 encoding
-    return remaining_bytes == 0
+        n_bytes -= 1
+    return n_bytes == 0
