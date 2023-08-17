@@ -13,16 +13,12 @@ def rotate_2d_matrix(matrix):
     
     Rotates the matrix in place
     """
-
+    
     n = len(matrix)
 
-    for layer in range(n // 2):
-        first = layer
-        last = n - layer - 1
-
-        for i in range(first, last):
-            temp = matrix[first][i]
-            matrix[first][i] = matrix[last - i][first]
-            matrix[last - i][first] = matrix[last][last - i]
-            matrix[last][last - i] = matrix[i][last]
-            matrix[i][last] = temp
+    for i in range(n):
+        for j in range(i, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    
+    for i in range(n):
+        matrix[i].reverse()
