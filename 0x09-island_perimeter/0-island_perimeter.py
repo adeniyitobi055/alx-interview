@@ -5,6 +5,10 @@
 
 
 def island_perimeter(grid):
+    """
+    island perimter function that returns the
+    perimeter of an island
+    """
     if not grid or not grid[0]:
         return 0
 
@@ -22,4 +26,5 @@ def island_perimeter(grid):
                     perimeter -= 2
                 if j > 0 and grid[i][j - 1] == 1:
                     perimeter -= 2
+
     return perimeter
