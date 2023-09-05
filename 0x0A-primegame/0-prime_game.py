@@ -10,7 +10,6 @@ def isWinner(x, nums):
     Returns the name of the player that won the most rounds,
     if the winner cannot be determined, None is returned.
     """
-
     maria_wins = 0
     ben_wins = 0
 
