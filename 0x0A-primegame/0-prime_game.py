@@ -7,14 +7,8 @@ count_prime = __import__('count_prime').count_prime
 
 def isWinner(x, nums):
     """
-    Args:
-        x: is the number of rounds.
-        nums: is an array of integers representing
-        the values of `n` for each round.
-    
-    Returns:
-        the name of the player that won the most rounds,
-        if the winner cannot be determined, None is returned.
+    Returns the name of the player that won the most rounds,
+    if the winner cannot be determined, None is returned.
     """
     
     maria_wins = 0
